@@ -4,33 +4,38 @@ using UnityEngine;
 
 using UnityEngine.UI;
 
+
 public class RobotClass : MonoBehaviour
 {
 
     public float battery_left = 100;
-    public float battery_max = 150;
+    public float battery_max = 100;
 
-    public float decharge_rate = 2.0f;
-    public float charge_rate = 10.0f;
-    bool has_item = false;
+    float decharge_rate = 4.0f;
+    float charge_rate = 15.0f;
+    public bool has_item = false;
     bool is_charging = false;
 
-	
+    public int kitsLeft;
+
     public float turnSpeed = 3.0f;
     public float moveSpeed = 18.0f;
 
     public GameObject allBeacons;
+    public GameObject allKits;
 
-    public Text chargeText;
 
     void Update()
     {
-        MouseAiming();
+        if (Time.timeScale != 0)
+        {
+            MouseAiming();
 
-        if(!is_charging)
-            battery_left -= decharge_rate * Time.deltaTime;
+            if (!is_charging && battery_left > 0.0f)
+                battery_left -= decharge_rate * Time.deltaTime;
 
-        chargeText.text = "Charge left: " + Mathf.Round(battery_left).ToString();
+             kitsLeft = allKits.transform.childCount;
+        }
     }
 
     private void FixedUpdate()
@@ -84,5 +89,10 @@ public class RobotClass : MonoBehaviour
         if(battery_left > 0.0f)
             transform.Translate(dir * moveSpeed * Time.deltaTime);
             
+    }
+
+    void GoToMainMenu()
+    {
+
     }
 }

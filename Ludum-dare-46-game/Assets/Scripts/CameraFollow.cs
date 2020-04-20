@@ -23,17 +23,20 @@ public float turnSpeed = 4.0f;
 
     void Update()
     {
-        // get the mouse inputs
-        float y = Input.GetAxis("Mouse X") * turnSpeed;
+        if (Time.timeScale != 0)
+        {
+            float y = Input.GetAxis("Mouse X") * turnSpeed;
+   
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + y, 0);
 
-        // rotate the camera
-        transform.eulerAngles = new Vector3(-rotX, transform.eulerAngles.y + y, 0);
+            transform.position = target.transform.position - (transform.forward * targetDistance);
+            transform.position += new Vector3(0, heightOffset, 0);
 
-        // move the camera position
-        transform.position = target.transform.position - (transform.forward * targetDistance);
-        transform.position += new Vector3(0,heightOffset,0);
 
-       
+
+
+
+        }
 
 
     }
